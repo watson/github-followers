@@ -29,8 +29,6 @@ patterns.add('GET /', function (req, res) {
 })
 
 patterns.add('GET /{username}', function (req, res) {
-  if (env !== 'production') console.log(req.method, req.url)
-
   var opts = {
     uri: 'https://api.github.com/users/' + req.params.username + '/followers',
     json: true,
@@ -77,6 +75,8 @@ patterns.add('GET /{username}', function (req, res) {
 })
 
 var server = http.createServer(function (req, res) {
+  if (env !== 'production') console.log(req.method, req.url)
+
   var match = patterns.match(req.method + ' ' + req.url)
 
   if (!match) {
