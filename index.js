@@ -1,6 +1,7 @@
 'use strict'
 
 var fs = require('fs')
+var path = require('path')
 var util = require('util')
 var http = require('http')
 var patterns = require('patterns')()
@@ -14,7 +15,7 @@ var head = '<!doctype html><head><meta charset=utf-8><title>GitHub followers</ti
 var top10k = []
 
 console.log('Loading top 10k Github users')
-fs.createReadStream('./top-10k.csv')
+fs.createReadStream(path.join(__dirname, 'top-10k.csv'))
   .pipe(csv())
   .on('data', function (data) {
     top10k.push(data.login)
