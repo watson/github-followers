@@ -62,6 +62,7 @@ patterns.add('GET /{username}', function (req, res) {
     var body = [head]
     body.push(userDiv(username, 'https://github.com/' + username + '.png', rank))
     body.push('<h2>Top Github followers</h2>')
+    body.push('<p>These people follow ' + username + ' and are all among the top 10k most active Github users in the world</p>')
     body.push('<div id=followers>')
 
     data
