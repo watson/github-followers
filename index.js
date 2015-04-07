@@ -54,21 +54,22 @@ patterns.add('GET /{username}', function (req, res) {
     rank = rank === -1 ? 'unknown' : rank + 1
 
     res.write(head)
-    res.write('<p>Listing followers of ' + username + ' (rank: ' + rank + ')')
+    res.write('<h1>' + username + '</h1>')
+    res.write('<p>(rank: ' + rank + ')</p>')
+    res.write('<h2>Top followers</h2>')
     res.write('<table><thead><tr><th></th><th>Username</th><th>Rank</th></tr></thead><tbody>')
 
     data
+      .filter(function (user) {
+        return ~top10k.indexOf(user.login)
+      })
       .sort(function (a, b) {
         a = top10k.indexOf(a.login)
         b = top10k.indexOf(b.login)
-        if (a === b) return 0
-        if (a === -1) return 1
-        if (b === -1) return -1
         return a - b
       })
       .forEach(function (user) {
         var rank = top10k.indexOf(user.login)
-        rank = rank === -1 ? 'unknown' : rank + 1
         res.write(util.format('<tr><td><img src="%s" heigth=50 width=50></td><td><a href="https://github.com/%s">%s</a></td><td>%s</td></tr>', user.avatar_url, user.login, user.login, rank))
       })
 
