@@ -4,6 +4,7 @@ var fs = require('fs')
 var path = require('path')
 var util = require('util')
 var http = require('http')
+var debug = require('debug')('followers')
 var patterns = require('patterns')()
 var request = require('request')
 var csv = require('csv-parser')
@@ -15,14 +16,14 @@ var css = fs.readFileSync(path.join(__dirname, 'style.css'))
 var head = '<!doctype html><head><meta charset=utf-8><title>GitHub followers</title><style type="text/css">' + css + '</style></head><body><div id=container>'
 var top10k = []
 
-console.log('Loading top 10k Github users')
+debug('Loading top 10k Github users')
 fs.createReadStream(path.join(__dirname, 'top-10K.csv'))
   .pipe(csv())
   .on('data', function (data) {
     top10k.push(data.login)
   })
   .on('end', function () {
-    console.log('Finished loading top 10k Github users')
+    debug('Finished loading top 10k Github users')
   })
 
 patterns.add('GET /', function (req, res) {
@@ -91,9 +92,9 @@ patterns.add('GET /{username}', function (req, res) {
 })
 
 var server = http.createServer(function (req, res) {
-  if (env !== 'production') console.log(req.method, req.url)
-
-  var match = patterns.match(req.method + ' ' + req.url)
+  var ptn = req.method + ' ' + req.url
+  debug(ptn)
+  var match = patterns.match(ptn)
 
   if (!match) {
     res.writeHead(404)
@@ -107,5 +108,5 @@ var server = http.createServer(function (req, res) {
 })
 
 server.listen(process.env.PORT, function () {
-  console.log('Server listening on port', server.address().port)
+  debug('Server listening on port ' + server.address().port)
 })
