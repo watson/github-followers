@@ -68,7 +68,7 @@ patterns.add('GET /{username}', function (req, res) {
       .forEach(function (user) {
         var rank = top10k.indexOf(user.login)
         rank = rank === -1 ? 'unknown' : rank + 1
-        res.write(util.format('<tr><td><img src="%s"></td><td><a href="https://github.com/%s">%s</a></td><td>%s</td></tr>', user.avatar_url, user.login, user.login, rank))
+        res.write(util.format('<tr><td><img src="%s" heigth=50 width=50></td><td><a href="https://github.com/%s">%s</a></td><td>%s</td></tr>', user.avatar_url, user.login, user.login, rank))
       })
 
     res.end('</tbody></table>')
