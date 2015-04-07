@@ -1,0 +1,30 @@
+{
+  "name": "github-followers",
+  "version": "1.0.0",
+  "description": "A web server that lists your Github followers based on rank",
+  "main": "index.js",
+  "scripts": {
+    "start": "node index.js",
+    "test": "standard"
+  },
+  "author": "Thomas Watson Steen <w@tson.dk>",
+  "license": "MIT",
+  "dependencies": {
+    "csv-parser": "^1.5.2",
+    "request": "^2.55.0"
+  },
+  "devDependencies": {
+    "standard": "^3.3.2"
+  },
+  "engines": {
+    "iojs": "1.x"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/watson/github-followers.git"
+  },
+  "bugs": {
+    "url": "https://github.com/watson/github-followers/issues"
+  },
+  "homepage": "https://github.com/watson/github-followers"
+}
