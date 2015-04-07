@@ -60,7 +60,7 @@ patterns.add('GET /{username}', function (req, res) {
 
     var body = [head]
     body.push(userDiv(username, 'https://github.com/' + username + '.png', rank))
-    body.push('<h2>Top followers</h2>')
+    body.push('<h2>Top Github followers</h2>')
     body.push('<div id=followers>')
 
     data
