@@ -15,7 +15,7 @@ var head = '<!doctype html><head><meta charset=utf-8><title>GitHub followers</ti
 var top10k = []
 
 console.log('Loading top 10k Github users')
-fs.createReadStream(path.join(__dirname, 'top-10k.csv'))
+fs.createReadStream(path.join(__dirname, 'top-10K.csv'))
   .pipe(csv())
   .on('data', function (data) {
     top10k.push(data.login)
