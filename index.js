@@ -11,7 +11,8 @@ var pkg = require('./package')
 
 var env = process.env.NODE_ENV || 'development'
 var userAgent = pkg.name + '/' + pkg.version
-var head = '<!doctype html><head><meta charset=utf-8><title>GitHub followers</title></head><body>'
+var css = fs.readFileSync(path.join(__dirname, 'style.css'))
+var head = '<!doctype html><head><meta charset=utf-8><title>GitHub followers</title><style type="text/css">' + css + '</style></head><body><div id=container>'
 var top10k = []
 
 console.log('Loading top 10k Github users')
@@ -27,6 +28,10 @@ fs.createReadStream(path.join(__dirname, 'top-10K.csv'))
 patterns.add('GET /', function (req, res) {
   res.end(head + '<input type=text name=username id=username placeholder="Enter GitHub username"><button onclick="window.location = document.getElementById(\'username\').value">Submit</button>')
 })
+
+var userDiv = function (login, avatar, rank) {
+  return util.format('<div class=user style="background-image: url(%s)"><a href="https://github.com/%s"><span class=name>%s</span><span class=rank>%s</span></a></div>', avatar, login, login, rank)
+}
 
 patterns.add('GET /{username}', function (req, res) {
   var username = req.params.username
@@ -51,13 +56,12 @@ patterns.add('GET /{username}', function (req, res) {
     }
 
     var rank = top10k.indexOf(username)
-    rank = rank === -1 ? 'unknown' : rank + 1
+    rank = rank === -1 ? 'no rank' : rank + 1
 
-    res.write(head)
-    res.write('<h1>' + username + '</h1>')
-    res.write('<p>(rank: ' + rank + ')</p>')
-    res.write('<h2>Top followers</h2>')
-    res.write('<table><thead><tr><th></th><th>Username</th><th>Rank</th></tr></thead><tbody>')
+    var body = [head]
+    body.push(userDiv(username, 'https://github.com/' + username + '.png', rank))
+    body.push('<h2>Top followers</h2>')
+    body.push('<div id=followers>')
 
     data
       .filter(function (user) {
@@ -70,10 +74,17 @@ patterns.add('GET /{username}', function (req, res) {
       })
       .forEach(function (user) {
         var rank = top10k.indexOf(user.login)
-        res.write(util.format('<tr><td><img src="%s" heigth=50 width=50></td><td><a href="https://github.com/%s">%s</a></td><td>%s</td></tr>', user.avatar_url, user.login, user.login, rank))
+        body.push(userDiv(user.login, user.avatar_url, rank))
       })
 
-    res.end('</tbody></table>')
+    body.push('</div></div>')
+    body = body.join('\n')
+
+    res.writeHead(200, {
+      'Content-Type': 'text/html',
+      'Content-Length': Buffer.byteLength(body)
+    })
+    res.end(body)
   })
 })
 

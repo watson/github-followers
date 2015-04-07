@@ -1,0 +1,50 @@
+#container {
+  width: 960px;
+  margin: 0 auto;
+  text-align: center;
+}
+
+.user {
+  background-size: cover;
+  width: 150px;
+  height: 150px;
+  margin: 0 auto;
+}
+
+#followers .user {
+  float: left;
+  margin: 5px;
+}
+
+.user a {
+  display: block;
+  height: 100%;
+  background: linear-gradient(
+    rgba(0, 0, 0, 0.6),
+    rgba(0, 0, 0, 0.6)
+  );
+  text-decoration: none;
+  font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
+  color: white;
+}
+
+.user span {
+  display: block;
+  text-align: center;
+  vertical-align: middle;
+  line-height: 150px;
+}
+
+.user .rank {
+  display: none;
+  font-size: 2rem;
+  font-weight: 900;
+}
+
+.user a:hover .name {
+  display: none;
+}
+
+.user a:hover .rank {
+  display: block;
+}
