@@ -29,13 +29,15 @@ patterns.add('GET /', function (req, res) {
 })
 
 patterns.add('GET /{username}', function (req, res) {
+  var username = req.params.username
   var opts = {
-    uri: 'https://api.github.com/users/' + req.params.username + '/followers',
+    uri: 'https://api.github.com/users/' + username + '/followers',
     json: true,
     headers: {
       'User-Agent': userAgent
     }
   }
+
   request(opts, function (err, response, data) {
     if (err) {
       res.writeHead(500)
@@ -48,11 +50,11 @@ patterns.add('GET /{username}', function (req, res) {
       return
     }
 
-    var rank = top10k.indexOf(req.params.username)
+    var rank = top10k.indexOf(username)
     rank = rank === -1 ? 'unknown' : rank + 1
 
     res.write(head)
-    res.write('<p>Listing followers of ' + req.params.username + ' (rank: ' + rank + ')')
+    res.write('<p>Listing followers of ' + username + ' (rank: ' + rank + ')')
     res.write('<table><thead><tr><th></th><th>Username</th><th>Rank</th></tr></thead><tbody>')
 
     data
