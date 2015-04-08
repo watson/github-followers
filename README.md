@@ -11,7 +11,6 @@ This work is based on the
 
 ## Todo
 
-- I should really use a template system! Maybe use React while we're at it
 - Index the worlds 100k Github most active users instead of only 10k
 - The design needs a lot of love
 
