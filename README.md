@@ -6,6 +6,9 @@ http://github-followers.herokuapp.com
 
 This is very much work in progress. Feel free to contribute :)
 
+This work is based on the
+[redox/top-github-users](https://github.com/redox/top-github-users) repo.
+
 ## Todo
 
 - I should really use a template system! Maybe use React while we're at it
