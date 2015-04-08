@@ -83,6 +83,8 @@ patterns.add('GET /{username}', function (req, res) {
       body.push(userDiv(user.login, user.avatar_url, rank))
     })
 
+    body.push('<div id=twitter><span><a href="https://twitter.com/share" class="twitter-share-button" data-text="Which top 10k most active Github follows you? These follow me:" data-size="large" data-count="none" data-dnt="true">Tweet</a><script>!function(d,s,id){var js,fjs=d.getElementsByTagName(s)[0],p=/^http:/.test(d.location)?\'http\':\'https\';if(!d.getElementById(id)){js=d.createElement(s);js.id=id;js.src=p+\'://platform.twitter.com/widgets.js\';fjs.parentNode.insertBefore(js,fjs);}}(document, \'script\', \'twitter-wjs\');</script></span></div>')
+
     if (!data.length) body.push('<p><strong>' + username + ' doesn\'t yet have any followers in top 10k</strong></p>')
 
     body.push('</div>')
