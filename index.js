@@ -83,9 +83,13 @@ patterns.add('GET /{username}', function (req, res) {
 
     var body = [head]
     body.push(userDiv(username, 'https://github.com/' + username + '.png', rank))
-    body.push('<h2>Top GitHub followers</h2>')
-    if (data.length) body.push('<p>These people follow ' + username + ' and are all among the top 10k most active GitHub users in the world</p>')
-    else body.push('<p>' + username + ' doesn\'t yet have any followers in top 10k :(<br /><strong>You\'re ' + username + '? You need to <a href="https://guides.github.com/activities/contributing-to-open-source/">step up your open source game</a>!</strong></p>')
+    if (data.length) {
+      body.push('<h2>Top GitHub followers</h2>')
+      body.push('<p>These people follow ' + username + ' and are all among the top 10k most active GitHub users in the world</p>')
+    } else {
+      body.push('<h2>Sorry, no GitHub followers in top 10k :(</h2>')
+      body.push('<p>You\'re ' + username + '? You need to <a href="https://guides.github.com/activities/contributing-to-open-source/">step up your open source game</a>!</p>')
+    }
     body.push('<div id=followers>')
 
     data.forEach(function (user) {
