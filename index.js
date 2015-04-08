@@ -56,7 +56,7 @@ patterns.add('GET /', function (req, res) {
 patterns.add('GET /{username}', function (req, res) {
   var username = req.params.username
   var opts = {
-    uri: 'https://api.github.com/users/' + username + '/followers',
+    uri: 'https://api.github.com/users/' + username + '/followers?client_id=' + process.env.GITHUB_APP_CLIENT_ID + '&client_secret=' + process.env.GITHUB_APP_CLIENT_SECRET,
     json: true,
     headers: {
       'User-Agent': userAgent
