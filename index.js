@@ -10,7 +10,6 @@ var request = require('request')
 var csv = require('csv-parser')
 var pkg = require('./package')
 
-var env = process.env.NODE_ENV || 'development'
 var userAgent = pkg.name + '/' + pkg.version
 var css = fs.readFileSync(path.join(__dirname, 'style.css'))
 var head = '<!doctype html><head><meta charset=utf-8><title>GitHub followers</title><style type="text/css">' + css + '</style></head><body><div id=container>'
