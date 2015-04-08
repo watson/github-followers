@@ -26,13 +26,17 @@ fs.createReadStream(path.join(__dirname, 'top-10K.csv'))
     debug('Finished loading top 10k Github users')
   })
 
-patterns.add('GET /', function (req, res) {
-  res.end(head + '<input type=text name=username id=username placeholder="Enter GitHub username"><button onclick="window.location = document.getElementById(\'username\').value">Submit</button>')
-})
+var form = function (login, avatar, rank) {
+  return '<form onsubmit="window.location = document.getElementById(\'username\').value; return false"><input type=text name=username id=username placeholder="Enter GitHub username"> <input type=submit value=View></form>'
+}
 
 var userDiv = function (login, avatar, rank) {
   return util.format('<div class=user style="background-image: url(%s)"><a href="https://github.com/%s"><span class=name>%s</span><span class=rank>%s</span></a></div>', avatar, login, login, rank)
 }
+
+patterns.add('GET /', function (req, res) {
+  res.end(head + form())
+})
 
 patterns.add('GET /{username}', function (req, res) {
   var username = req.params.username
@@ -80,8 +84,9 @@ patterns.add('GET /{username}', function (req, res) {
       })
 
     body.push('</div>')
-    body.push('<a href="https://github.com/watson/github-followers"><img style="position: absolute; top: 0; right: 0; border: 0;" src="https://camo.githubusercontent.com/38ef81f8aca64bb9a64448d0d70f1308ef5341ab/68747470733a2f2f73332e616d617a6f6e6177732e636f6d2f6769746875622f726962626f6e732f666f726b6d655f72696768745f6461726b626c75655f3132313632312e706e67" alt="Fork me on GitHub" data-canonical-src="https://s3.amazonaws.com/github/ribbons/forkme_right_darkblue_121621.png"></a>')
+    body.push(form())
     body.push('</div>')
+    body.push('<a href="https://github.com/watson/github-followers"><img style="position: absolute; top: 0; right: 0; border: 0;" src="https://camo.githubusercontent.com/38ef81f8aca64bb9a64448d0d70f1308ef5341ab/68747470733a2f2f73332e616d617a6f6e6177732e636f6d2f6769746875622f726962626f6e732f666f726b6d655f72696768745f6461726b626c75655f3132313632312e706e67" alt="Fork me on GitHub" data-canonical-src="https://s3.amazonaws.com/github/ribbons/forkme_right_darkblue_121621.png"></a>')
     body = body.join('\n')
 
     res.writeHead(200, {
