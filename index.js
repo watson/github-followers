@@ -47,7 +47,9 @@ var respond = function (res, body, status) {
 }
 
 patterns.add('GET /', function (req, res) {
-  respond(res, '')
+  var body = '<h1>Does someone famous follow you on GitHub?</h1>' +
+    '<p>Enter your GitHub username below to see who among the top 10k most active GitHub users follow you:</p>'
+  respond(res, body)
 })
 
 patterns.add('GET /{username}', function (req, res) {
