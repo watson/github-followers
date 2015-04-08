@@ -28,10 +28,6 @@ fs.createReadStream(path.join(__dirname, 'top-10K.csv'))
     debug('Finished loading top 10k GitHub users')
   })
 
-var form = function (login, avatar, rank) {
-  return '<form onsubmit="window.location = document.getElementById(\'username\').value; return false"><input type=text name=username id=username placeholder="Enter GitHub username"> <input type=submit value=View></form>'
-}
-
 var userDiv = function (login, avatar, rank) {
   rank = rank ? '#' + rank : 'no rank'
   return util.format('<div class=user style="background-image: url(%s)"><a href="https://github.com/%s"><span class=name>%s</span><span class=rank>%s</span></a></div>', avatar, login, login, rank)
@@ -51,14 +47,14 @@ var respond = function (res, body, status) {
 }
 
 patterns.add('GET /', function (req, res) {
-  respond(res, form())
+  respond(res, '')
 })
 
 patterns.add('GET /{username}', function (req, res) {
   var username = req.params.username
 
   if (!githubUsername.test(username)) {
-    var body = username + ' is an invalid GitHub username' + form()
+    var body = username + ' is an invalid GitHub username'
     respond(res, body, 404)
     return
   }
@@ -81,13 +77,13 @@ patterns.add('GET /{username}', function (req, res) {
       return
     }
     if (response.statusCode === 404) {
-      body = 'Could not find ' + username + ' on GitHub' + form()
+      body = 'Could not find ' + username + ' on GitHub'
       respond(res, body, 404)
       return
     }
     if (data.message) {
       opbeat.captureError(data.message)
-      body = 'Sorry :( An unexpected error occurred when trying to look up ' + username + ' on GitHub' + form()
+      body = 'Sorry :( An unexpected error occurred when trying to look up ' + username + ' on GitHub'
       respond(res, body, 500)
       return
     }
@@ -124,7 +120,6 @@ patterns.add('GET /{username}', function (req, res) {
     body.push('<div id=twitter><span><a href="https://twitter.com/share" class="twitter-share-button" data-text="Which top 10k most active GitHub follows you? These follow me:" data-size="large" data-count="none" data-dnt="true">Tweet</a><script>!function(d,s,id){var js,fjs=d.getElementsByTagName(s)[0],p=/^http:/.test(d.location)?\'http\':\'https\';if(!d.getElementById(id)){js=d.createElement(s);js.id=id;js.src=p+\'://platform.twitter.com/widgets.js\';fjs.parentNode.insertBefore(js,fjs);}}(document, \'script\', \'twitter-wjs\');</script></span></div>')
     body.push('</div>')
 
-    body.push(form())
     body = body.join('\n')
 
     respond(res, body)

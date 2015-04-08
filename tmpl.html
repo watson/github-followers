@@ -20,6 +20,10 @@
   <body>
     <div id=container>
       {{body}}
+      <form onsubmit="window.location = document.getElementById('username').value; return false">
+        <input type="text" name="username" id="username" placeholder="Enter GitHub username">
+        <input type="submit" value="View">
+      </form>
     </div>
     <footer>
       <div class="left">
