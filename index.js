@@ -65,6 +65,7 @@ patterns.add('GET /{username}', function (req, res) {
 
   request(opts, function (err, response, data) {
     var body
+    debug('Remaining GitHub API requests: ' + response.headers['x-ratelimit-remaining'])
 
     if (err) {
       opbeat.captureError(err)
