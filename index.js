@@ -55,6 +55,9 @@ patterns.add('GET /{username}', function (req, res) {
     }
     if (!Array.isArray(data)) {
       res.writeHead(404)
+      res.write(head)
+      res.write('Could not find ' + username + ' on Github')
+      res(form())
       res.end()
       return
     }
