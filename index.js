@@ -2,6 +2,7 @@
 
 var fs = require('fs')
 var path = require('path')
+var urlParser = require('url').parse
 var util = require('util')
 var http = require('http')
 var opbeat = require('opbeat')()
@@ -47,6 +48,14 @@ var respond = function (res, body, status) {
 }
 
 patterns.add('GET /', function (req, res) {
+  if (req.query.username) {
+    res.writeHead(307, {
+      Location: '/' + req.query.username
+    })
+    res.end()
+    return
+  }
+
   var body = '<h1>Does someone famous follow you on GitHub?</h1>' +
     '<p>Enter your GitHub username below to see who among the top 10k most active GitHub users follow you:</p>'
   respond(res, body)
@@ -129,14 +138,15 @@ patterns.add('GET /{username}', function (req, res) {
 })
 
 var server = http.createServer(function (req, res) {
-  var ptn = req.method + ' ' + req.url
-  debug(ptn)
-  var match = patterns.match(ptn)
+  var url = urlParser(req.url, true)
+  debug(req.method + ' ' + req.url)
+  var match = patterns.match(req.method + ' ' + url.pathname)
 
   if (!match) return respond(res, '', 404)
 
   var fn = match.value
   req.params = match.params
+  req.query = url.query
   fn(req, res)
 })
 
