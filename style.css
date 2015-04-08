@@ -11,6 +11,10 @@
   margin: 0 auto;
 }
 
+#followers {
+  display: inline-block;
+}
+
 #followers .user {
   float: left;
   margin: 5px;
