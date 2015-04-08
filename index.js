@@ -60,6 +60,16 @@ patterns.add('GET /{username}', function (req, res) {
       return
     }
 
+    data = data
+      .filter(function (user) {
+        return ~top10k.indexOf(user.login)
+      })
+      .sort(function (a, b) {
+        a = top10k.indexOf(a.login)
+        b = top10k.indexOf(b.login)
+        return a - b
+      })
+
     var rank = top10k.indexOf(username)
     rank = rank === -1 ? 'no rank' : rank + 1
 
@@ -69,19 +79,12 @@ patterns.add('GET /{username}', function (req, res) {
     body.push('<p>These people follow ' + username + ' and are all among the top 10k most active Github users in the world</p>')
     body.push('<div id=followers>')
 
-    data
-      .filter(function (user) {
-        return ~top10k.indexOf(user.login)
-      })
-      .sort(function (a, b) {
-        a = top10k.indexOf(a.login)
-        b = top10k.indexOf(b.login)
-        return a - b
-      })
-      .forEach(function (user) {
-        var rank = top10k.indexOf(user.login)
-        body.push(userDiv(user.login, user.avatar_url, rank))
-      })
+    data.forEach(function (user) {
+      var rank = top10k.indexOf(user.login)
+      body.push(userDiv(user.login, user.avatar_url, rank))
+    })
+
+    if (!data.length) body.push('<p><strong>' + username + ' doesn\'t yet have any followers in top 10k</strong></p>')
 
     body.push('</div>')
     body.push(form())
