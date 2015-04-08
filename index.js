@@ -4,6 +4,7 @@ var fs = require('fs')
 var path = require('path')
 var util = require('util')
 var http = require('http')
+var opbeat = require('opbeat')()
 var debug = require('debug')('followers')
 var patterns = require('patterns')()
 var request = require('request')
@@ -51,6 +52,7 @@ patterns.add('GET /{username}', function (req, res) {
 
   request(opts, function (err, response, data) {
     if (err) {
+      opbeat.captureError(err)
       res.writeHead(500)
       res.end(err.message)
       return
