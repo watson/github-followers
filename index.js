@@ -12,6 +12,7 @@ var csv = require('csv-parser')
 var Handlebars = require('handlebars')
 var pkg = require('./package')
 
+var githubUsername = /^([A-Za-z\d]|[A-Za-z\d][-A-Za-z\d]*[A-Za-z\d])$/
 var userAgent = pkg.name + '/' + pkg.version
 var css = new Handlebars.SafeString(fs.readFileSync(path.join(__dirname, 'style.css')).toString())
 var tmpl = Handlebars.compile(fs.readFileSync(path.join(__dirname, 'tmpl.html')).toString())
@@ -55,6 +56,13 @@ patterns.add('GET /', function (req, res) {
 
 patterns.add('GET /{username}', function (req, res) {
   var username = req.params.username
+
+  if (!githubUsername.test(username)) {
+    var body = username + ' is an invalid GitHub username' + form()
+    respond(res, body, 404)
+    return
+  }
+
   var opts = {
     uri: 'https://api.github.com/users/' + username + '/followers?client_id=' + process.env.GITHUB_APP_CLIENT_ID + '&client_secret=' + process.env.GITHUB_APP_CLIENT_SECRET,
     json: true,
