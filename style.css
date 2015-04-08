@@ -47,6 +47,11 @@ footer a.icon:hover {
   color: #555;
 }
 
+footer i span {
+  position: absolute;
+  text-indent: -99999px;
+}
+
 #container {
   width: 960px;
   margin: 10px auto 0 auto;
