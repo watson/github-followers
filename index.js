@@ -33,6 +33,7 @@ var form = function (login, avatar, rank) {
 }
 
 var userDiv = function (login, avatar, rank) {
+  rank = rank ? '#' + rank : 'no rank'
   return util.format('<div class=user style="background-image: url(%s)"><a href="https://github.com/%s"><span class=name>%s</span><span class=rank>%s</span></a></div>', avatar, login, login, rank)
 }
 
@@ -78,7 +79,7 @@ patterns.add('GET /{username}', function (req, res) {
       })
 
     var rank = top10k.indexOf(username)
-    rank = rank === -1 ? 'no rank' : rank + 1
+    if (rank === -1) rank = null
 
     var body = [head]
     body.push(userDiv(username, 'https://github.com/' + username + '.png', rank))
