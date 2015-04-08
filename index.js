@@ -72,6 +72,7 @@ patterns.add('GET /{username}', function (req, res) {
       return
     }
     if (!Array.isArray(data)) {
+      if (data.message) opbeat.captureError(data.message)
       body = 'Could not find ' + username + ' on GitHub' + form()
       respond(res, body, 404)
       return
