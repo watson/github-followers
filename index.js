@@ -84,7 +84,8 @@ patterns.add('GET /{username}', function (req, res) {
     var body = [head]
     body.push(userDiv(username, 'https://github.com/' + username + '.png', rank))
     body.push('<h2>Top GitHub followers</h2>')
-    body.push('<p>These people follow ' + username + ' and are all among the top 10k most active GitHub users in the world</p>')
+    if (data.length) body.push('<p>These people follow ' + username + ' and are all among the top 10k most active GitHub users in the world</p>')
+    else body.push('<p>' + username + ' doesn\'t yet have any followers in top 10k :(<br /><strong>You\'re ' + username + '? You need to <a href="https://guides.github.com/activities/contributing-to-open-source/">step up your open souce game</a>!</strong></p>')
     body.push('<div id=followers>')
 
     data.forEach(function (user) {
@@ -93,8 +94,6 @@ patterns.add('GET /{username}', function (req, res) {
     })
 
     body.push('<div id=twitter><span><a href="https://twitter.com/share" class="twitter-share-button" data-text="Which top 10k most active GitHub follows you? These follow me:" data-size="large" data-count="none" data-dnt="true">Tweet</a><script>!function(d,s,id){var js,fjs=d.getElementsByTagName(s)[0],p=/^http:/.test(d.location)?\'http\':\'https\';if(!d.getElementById(id)){js=d.createElement(s);js.id=id;js.src=p+\'://platform.twitter.com/widgets.js\';fjs.parentNode.insertBefore(js,fjs);}}(document, \'script\', \'twitter-wjs\');</script></span></div>')
-
-    if (!data.length) body.push('<p style="clear: both">' + username + ' doesn\'t yet have any followers in top 10k :(<br /><strong>You\'re ' + username + '? You need to <a href="https://guides.github.com/activities/contributing-to-open-source/">step up your open souce game</a>!</strong></p>')
 
     body.push('</div>')
     body.push(form())
