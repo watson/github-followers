@@ -43,7 +43,7 @@ var respond = function (res, body, status) {
     body: new Handlebars.SafeString(body)
   })
   res.writeHead(status || 200, {
-    'Content-Type': 'text/html',
+    'Content-Type': 'text/html; charset=utf-8',
     'Content-Length': Buffer.byteLength(body)
   })
   res.end(body)
