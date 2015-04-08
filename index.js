@@ -87,7 +87,7 @@ patterns.add('GET /{username}', function (req, res) {
     body.push('<div id=followers>')
 
     data.forEach(function (user) {
-      var rank = top10k.indexOf(user.login)
+      var rank = top10k.indexOf(user.login) + 1
       body.push(userDiv(user.login, user.avatar_url, rank))
     })
 
