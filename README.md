@@ -2,7 +2,7 @@
 
 A web server that lists your Github followers based on rank:
 
-http://github-followers.herokuapp.com
+http://www.github-followers.com
 
 This is very much work in progress. Feel free to contribute :)
 
