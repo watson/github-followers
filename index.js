@@ -31,7 +31,7 @@ fs.createReadStream(path.join(__dirname, 'top-10K.csv'))
 
 var userDiv = function (login, avatar, rank) {
   rank = rank ? '#' + rank : 'no rank'
-  return util.format('<div class=user style="background-image: url(%s)"><a href="https://github.com/%s"><span class=name>%s</span><span class=rank>%s</span></a></div>', avatar, login, login, rank)
+  return util.format('<div class=user style="background-image: url(%s&s=150)"><a href="https://github.com/%s"><span class=name>%s</span><span class=rank>%s</span></a></div>', avatar, login, login, rank)
 }
 
 var respond = function (res, body, status) {
