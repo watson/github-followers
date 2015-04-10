@@ -20,7 +20,7 @@ footer {
   font-size: 12px;
 }
 
-footer, footer a, footer i {
+footer, footer a, footer svg {
   line-height: 50px;
   vertical-align: middle;
 }
@@ -39,15 +39,23 @@ footer a {
   text-decoration: none;
 }
 
-footer a.icon {
+footer .icon-link {
   margin-left: 7px;
 }
 
-footer a.icon:hover {
+footer .icon-link:hover {
   color: #555;
 }
 
-footer i span {
+.icon {
+  display: inline;
+  fill: currentColor;
+  width: 25px;
+  height: 25px;
+  padding-bottom: 2px;
+}
+
+footer span {
   position: absolute;
   text-indent: -99999px;
 }
