@@ -4,7 +4,7 @@ html {
 }
 
 body {
-  margin: 0 0 50px; /* bottom = footer height */
+  margin: 0 0 60px; /* bottom = footer height + padding */
   font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
 }
 
