@@ -25,11 +25,11 @@ footer, footer a, footer i {
   vertical-align: middle;
 }
 
-footer .left {
+footer .credits {
   float: left;
 }
 
-footer .right {
+footer .source {
   float: right;
   margin-right: 35px;
 }
